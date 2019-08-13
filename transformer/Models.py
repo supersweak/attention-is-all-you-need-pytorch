@@ -85,12 +85,18 @@ class Encoder(nn.Module):
 
         # -- Forward
         enc_output = self.src_word_emb(src_seq) + self.position_enc(src_pos)
-
+        enc_output_all = [enc_output]
+        slf_attn_mask_all = []
+        print('enc_output.shape',enc_output.shape)
         for enc_layer in self.layer_stack:
+            slf_attn_mask_all.append(slf_attn_mask) #attention need to expand
+            slf_attn_mask_feed = 
+            enc_output_feed = 
             enc_output, enc_slf_attn = enc_layer(
-                enc_output,
+                enc_output_feed,
                 non_pad_mask=non_pad_mask,
-                slf_attn_mask=slf_attn_mask)
+                slf_attn_mask=slf_attn_mask_feed)
+            enc_output_all.append(enc_output)
             if return_attns:
                 enc_slf_attn_list += [enc_slf_attn]
 
